@@ -1,0 +1,21 @@
+{
+  "name": "Race Predictor PRO",
+  "short_name": "RacePredictor",
+  "description": "Predição científica de tempos de corrida com integração oficial ao Strava, altimetria GPX e clima",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#fc4c02",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
