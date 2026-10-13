@@ -1,3 +1,4 @@
+{
   "name": "race-predictor",
   "version": "1.0.0",
   "description": "Scientific running race time predictor using Strava API (24 weeks), GPX topography (Minetti), and Open-Meteo weather.",
