@@ -3,6 +3,7 @@
 import React from "react";
 import { Activity, RefreshCw, CheckCircle2, LogOut } from "lucide-react";
 import { StravaAthlete } from "@/lib/types";
+import { ConnectWithStravaButton } from "./ConnectWithStravaButton";
 
 interface NavbarProps {
   athlete: StravaAthlete | null;
@@ -92,13 +93,10 @@ export function Navbar({
             </div>
           ) : (
             <div className="flex items-center gap-2">
-              <button
+              <ConnectWithStravaButton
                 onClick={onConnectStrava}
-                className="flex items-center gap-1.5 rounded-lg bg-[#FC4C02] px-3 py-1.5 text-xs font-bold text-white hover:bg-[#e04402] transition active:scale-95"
-              >
-                <Activity className="h-3.5 w-3.5 shrink-0" />
-                <span>Conectar Strava</span>
-              </button>
+                size="sm"
+              />
             </div>
           )}
         </div>

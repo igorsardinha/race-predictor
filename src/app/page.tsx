@@ -12,6 +12,7 @@ import { PredictionResult } from "@/components/PredictionResult";
 import { PaceStrategyTable } from "@/components/PaceStrategyTable";
 import { PaceBandCard } from "@/components/PaceBandCard";
 import { StravaRoutesModal } from "@/components/StravaRoutesModal";
+import { ConnectWithStravaButton } from "@/components/ConnectWithStravaButton";
 import { PwaInstallPrompt } from "@/components/PwaInstallPrompt";
 
 import {
@@ -393,7 +394,7 @@ export default function RacePredictorPage() {
       <main className="mx-auto max-w-7xl px-3 sm:px-6 py-4 sm:py-6 flex-1 w-full space-y-4 sm:space-y-6">
         {/* Banner se o Strava ainda não estiver conectado */}
         {!authState.connected && (
-          <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-3.5 sm:p-4 flex flex-wrap items-center justify-between gap-3 text-xs text-gray-300">
+          <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-gray-300">
             <div className="min-w-0 flex-1">
               <span className="font-semibold text-white block">
                 Nenhuma conta do Strava conectada
@@ -402,13 +403,11 @@ export default function RacePredictorPage() {
                 Conecte seu Strava oficial para baixar suas corridas das últimas 24 semanas e calibrar sua curva de fadiga individual.
               </span>
             </div>
-            <button
+            <ConnectWithStravaButton
               onClick={handleConnectStrava}
-              className="w-full sm:w-auto justify-center flex items-center gap-2 rounded-lg bg-[#FC4C02] hover:bg-[#e04402] px-4 py-2 font-bold text-white transition text-xs shadow-md shadow-orange-600/20"
-            >
-              <Activity className="h-4 w-4" />
-              Conectar Strava Oficial
-            </button>
+              size="default"
+              className="w-full sm:w-auto"
+            />
           </div>
         )}
 

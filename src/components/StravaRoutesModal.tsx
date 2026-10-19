@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { GpxAnalysis, StravaRoute } from "@/lib/types";
 import { parseGpxFile } from "@/lib/gpxParser";
+import { StravaLogoIcon } from "./ConnectWithStravaButton";
 
 interface StravaRoutesModalProps {
   isOpen: boolean;
@@ -118,8 +119,8 @@ export function StravaRoutesModal({
         {/* Header */}
         <div className="flex items-center justify-between border-b border-gray-800 px-4 sm:px-6 py-3.5 sm:py-4">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20">
-              <RouteIcon className="h-5 w-5" />
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#FC4C02] text-white shadow-sm">
+              <StravaLogoIcon className="h-5 w-5 fill-current" />
             </div>
             <div className="min-w-0">
               <h3 className="text-sm sm:text-base font-bold text-white truncate">

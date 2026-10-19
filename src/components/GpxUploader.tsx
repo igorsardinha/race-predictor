@@ -16,6 +16,7 @@ import {
 import { GpxAnalysis } from "@/lib/types";
 import { parseGpxFile } from "@/lib/gpxParser";
 import { InfoTooltip } from "./InfoTooltip";
+import { StravaLogoIcon } from "./ConnectWithStravaButton";
 
 interface GpxUploaderProps {
   currentGpx: GpxAnalysis | null;
@@ -127,7 +128,7 @@ export function GpxUploader({
               onClick={onOpenStravaRoutes}
               className="flex items-center gap-1.5 rounded-lg bg-[#FC4C02] hover:bg-[#e04402] px-3 py-1.5 text-xs font-bold text-white shadow-md shadow-orange-600/20 transition"
             >
-              <Star className="h-3.5 w-3.5 fill-current" />
+              <StravaLogoIcon className="h-3.5 w-3.5 fill-current" />
               <span>Rotas Strava</span>
             </button>
           )}
@@ -209,19 +210,19 @@ export function GpxUploader({
           className="mt-4 w-full flex items-center justify-between rounded-xl border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/15 p-3.5 transition text-left group"
         >
           <div className="flex items-center gap-3 min-w-0">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400 group-hover:scale-105 transition">
-              <Star className="h-5 w-5 fill-current" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#FC4C02] text-white group-hover:scale-105 transition shadow-sm">
+              <StravaLogoIcon className="h-5 w-5 fill-current" />
             </div>
             <div className="min-w-0">
               <span className="text-xs sm:text-sm font-bold text-white block truncate">
                 Usar Rota Salva ou Favorita do Strava
               </span>
-              <p className="text-xs text-amber-300/80 truncate">
+              <p className="text-xs text-orange-200/80 truncate">
                 Importe percursos oficiais e favoritos com 1 clique
               </p>
             </div>
           </div>
-          <span className="rounded-lg bg-amber-500 hover:bg-amber-600 px-3 py-1.5 text-xs font-bold text-slate-950 shrink-0 hidden sm:inline-block transition">
+          <span className="rounded-lg bg-[#FC4C02] hover:bg-[#e04402] px-3.5 py-1.5 text-xs font-bold text-white shrink-0 hidden sm:inline-block transition shadow-sm">
             Abrir Rotas
           </span>
         </button>
