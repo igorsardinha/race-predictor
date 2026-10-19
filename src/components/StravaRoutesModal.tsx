@@ -36,7 +36,7 @@ export function StravaRoutesModal({
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<"all" | "starred">("starred");
-  const [importingRouteId, setImportingRouteId] = useState<number | null>(null);
+  const [importingRouteId, setImportingRouteId] = useState<string | null>(null);
 
   // Carrega as rotas da API quando o modal abre
   useEffect(() => {

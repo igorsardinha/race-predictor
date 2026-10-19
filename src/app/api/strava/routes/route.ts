@@ -52,7 +52,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const rawRoutes = await routesRes.json();
+    const rawText = await routesRes.text();
+
+    // Protege IDs inteiros de 64 bits do Strava contra perda de precisão no JSON.parse (IEEE 754)
+    // Converte "id": 1234567890123456789 para string se não houver aspas
+    const sanitizedText = rawText.replace(
+      /"id":\s*(\d{10,})/g,
+      '"id": "$1", "safe_id_str": "$1"'
+    );
+
+    let rawRoutes: any[] = [];
+    try {
+      rawRoutes = JSON.parse(sanitizedText);
+    } catch {
+      rawRoutes = JSON.parse(rawText);
+    }
 
     if (!Array.isArray(rawRoutes)) {
       return NextResponse.json({ routes: [] });
@@ -60,7 +74,7 @@ export async function POST(req: NextRequest) {
 
     // Normaliza para o modelo StravaRoute
     const routes: StravaRoute[] = rawRoutes.map((r: any) => ({
-      id: r.id,
+      id: String(r.safe_id_str || r.id_str || r.id),
       name: r.name || "Rota sem nome",
       distanceMeters: Math.round(r.distance || 0),
       distanceKm: Number(((r.distance || 0) / 1000).toFixed(2)),

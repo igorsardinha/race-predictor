@@ -155,7 +155,7 @@ export interface StravaAuthState {
 }
 
 export interface StravaRoute {
-  id: number;
+  id: string;
   name: string;
   distanceMeters: number;
   distanceKm: number;
