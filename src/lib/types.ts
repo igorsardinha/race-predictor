@@ -153,3 +153,17 @@ export interface StravaAuthState {
   expiresAt?: number;
   athlete?: StravaAthlete | null;
 }
+
+export interface StravaRoute {
+  id: number;
+  name: string;
+  distanceMeters: number;
+  distanceKm: number;
+  elevationGainMeters: number;
+  starred: boolean;
+  type: number;
+  subType: number;
+  summaryPolyline?: string;
+  createdAt?: string;
+  estimatedMovingTimeSec?: number;
+}

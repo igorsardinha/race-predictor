@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       clientId
     )}&response_type=code&redirect_uri=${encodeURIComponent(
       redirectUri
-    )}&approval_prompt=auto&scope=read,activity:read_all`;
+    )}&approval_prompt=auto&scope=read,read_all,activity:read_all`;
 
     return NextResponse.json({ url });
   } catch {

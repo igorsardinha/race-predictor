@@ -11,6 +11,7 @@ import { WeatherCard } from "@/components/WeatherCard";
 import { PredictionResult } from "@/components/PredictionResult";
 import { PaceStrategyTable } from "@/components/PaceStrategyTable";
 import { PaceBandCard } from "@/components/PaceBandCard";
+import { StravaRoutesModal } from "@/components/StravaRoutesModal";
 import { PwaInstallPrompt } from "@/components/PwaInstallPrompt";
 
 import {
@@ -44,6 +45,7 @@ export default function RacePredictorPage() {
   const [isActivitiesModalOpen, setIsActivitiesModalOpen] = useState(false);
   const [isSplitsModalOpen, setIsSplitsModalOpen] = useState(false);
   const [isPaceBandModalOpen, setIsPaceBandModalOpen] = useState(false);
+  const [isStravaRoutesModalOpen, setIsStravaRoutesModalOpen] = useState(false);
 
   // 3. Percurso State: Padrão é Percurso Plano (21.1 km) sem elevação
   const [selectedFlatDistanceKm, setSelectedFlatDistanceKm] = useState<number>(21.0975);
@@ -448,6 +450,8 @@ export default function RacePredictorPage() {
           onSelectFlatDistance={handleSelectFlatDistance}
           onGpxParsed={handleGpxParsed}
           onResetToFlat={handleResetToFlat}
+          isConnectedStrava={authState.connected}
+          onOpenStravaRoutes={() => setIsStravaRoutesModalOpen(true)}
         />
 
         {/* 4. VISUALIZAÇÕES GRÁFICAS: ALTIMETRIA E MAPA VETORIAL */}
@@ -494,6 +498,15 @@ export default function RacePredictorPage() {
         onClose={() => setIsPaceBandModalOpen(false)}
         prediction={prediction}
         courseName={currentGpx.name}
+      />
+
+      {/* Modal de Rotas Salvas / Favoritas do Strava */}
+      <StravaRoutesModal
+        isOpen={isStravaRoutesModalOpen}
+        onClose={() => setIsStravaRoutesModalOpen(false)}
+        accessToken={authState.accessToken}
+        athleteId={authState.athlete?.id}
+        onSelectRoute={handleGpxParsed}
       />
 
       {/* PWA Banner Prompt de Instalação */}

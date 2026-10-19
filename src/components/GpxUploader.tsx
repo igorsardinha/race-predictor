@@ -10,6 +10,8 @@ import {
   CheckCircle2,
   X,
   Layers,
+  Star,
+  Route as RouteIcon,
 } from "lucide-react";
 import { GpxAnalysis } from "@/lib/types";
 import { parseGpxFile } from "@/lib/gpxParser";
@@ -22,6 +24,8 @@ interface GpxUploaderProps {
   onSelectFlatDistance: (km: number) => void;
   onGpxParsed: (gpx: GpxAnalysis) => void;
   onResetToFlat: () => void;
+  isConnectedStrava?: boolean;
+  onOpenStravaRoutes?: () => void;
 }
 
 const DISTANCE_PRESETS = [
@@ -38,6 +42,8 @@ export function GpxUploader({
   onSelectFlatDistance,
   onGpxParsed,
   onResetToFlat,
+  isConnectedStrava,
+  onOpenStravaRoutes,
 }: GpxUploaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -114,15 +120,28 @@ export function GpxUploader({
           </div>
         </div>
 
-        {isCustomGpx && (
-          <button
-            onClick={onResetToFlat}
-            className="flex shrink-0 items-center gap-1 rounded-md bg-gray-800 hover:bg-gray-700 px-2.5 py-1 text-xs text-gray-300 hover:text-white border border-gray-700 transition"
-          >
-            <X className="h-3.5 w-3.5 text-gray-400" />
-            Remover GPX (Voltar ao Plano)
-          </button>
-        )}
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          {isConnectedStrava && onOpenStravaRoutes && (
+            <button
+              type="button"
+              onClick={onOpenStravaRoutes}
+              className="flex items-center gap-1.5 rounded-lg bg-[#FC4C02] hover:bg-[#e04402] px-3 py-1.5 text-xs font-bold text-white shadow-md shadow-orange-600/20 transition"
+            >
+              <Star className="h-3.5 w-3.5 fill-current" />
+              <span>Rotas Strava</span>
+            </button>
+          )}
+
+          {isCustomGpx && (
+            <button
+              onClick={onResetToFlat}
+              className="flex shrink-0 items-center gap-1 rounded-md bg-gray-800 hover:bg-gray-700 px-2.5 py-1.5 text-xs text-gray-300 hover:text-white border border-gray-700 transition"
+            >
+              <X className="h-3.5 w-3.5 text-gray-400" />
+              <span>Voltar ao Plano</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Se não enviou GPX: Seletor de Distância para o percurso plano */}
@@ -180,6 +199,32 @@ export function GpxUploader({
             </form>
           </div>
         </div>
+      )}
+
+      {/* Botão de Atalho para Rotas do Strava se conectado */}
+      {isConnectedStrava && onOpenStravaRoutes && !isCustomGpx && (
+        <button
+          type="button"
+          onClick={onOpenStravaRoutes}
+          className="mt-4 w-full flex items-center justify-between rounded-xl border border-amber-500/30 bg-amber-500/10 hover:bg-amber-500/15 p-3.5 transition text-left group"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400 group-hover:scale-105 transition">
+              <Star className="h-5 w-5 fill-current" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-xs sm:text-sm font-bold text-white block truncate">
+                Usar Rota Salva ou Favorita do Strava
+              </span>
+              <p className="text-xs text-amber-300/80 truncate">
+                Importe percursos oficiais e favoritos com 1 clique
+              </p>
+            </div>
+          </div>
+          <span className="rounded-lg bg-amber-500 hover:bg-amber-600 px-3 py-1.5 text-xs font-bold text-slate-950 shrink-0 hidden sm:inline-block transition">
+            Abrir Rotas
+          </span>
+        </button>
       )}
 
       {/* Drag & Drop Area */}
