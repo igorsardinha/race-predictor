@@ -10,6 +10,7 @@ import {
   Layers,
   Heart,
   ChevronRight,
+  LogOut,
 } from "lucide-react";
 import { AthleteFitnessMetrics, StravaAthlete } from "@/lib/types";
 import { formatPaceSecKm, formatTimeSec } from "@/lib/predictorEngine";
@@ -19,12 +20,14 @@ interface AthleteProfileCardProps {
   athlete: StravaAthlete | null;
   metrics: AthleteFitnessMetrics;
   onOpenActivities: () => void;
+  onDisconnectStrava?: () => void;
 }
 
 export function AthleteProfileCard({
   athlete,
   metrics,
   onOpenActivities,
+  onDisconnectStrava,
 }: AthleteProfileCardProps) {
   return (
     <div className="rounded-2xl border border-gray-800 bg-gray-900/60 p-4 sm:p-5 shadow-xl backdrop-blur-md">
@@ -57,15 +60,28 @@ export function AthleteProfileCard({
           </div>
         </div>
 
-        <button
-          onClick={onOpenActivities}
-          disabled={metrics.totalRunsAnalyzed === 0}
-          className="flex shrink-0 items-center gap-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-300 hover:text-white transition border border-gray-700/60 disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          <Layers className="h-3.5 w-3.5 text-orange-400" />
-          Ver Corridas (24 Semanas)
-          <ChevronRight className="h-3.5 w-3.5 opacity-60" />
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={onOpenActivities}
+            disabled={metrics.totalRunsAnalyzed === 0}
+            className="flex items-center gap-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-300 hover:text-white transition border border-gray-700/60 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <Layers className="h-3.5 w-3.5 text-orange-400" />
+            Ver Corridas (24 Semanas)
+            <ChevronRight className="h-3.5 w-3.5 opacity-60" />
+          </button>
+
+          {athlete && onDisconnectStrava && (
+            <button
+              onClick={onDisconnectStrava}
+              title="Desconectar conta do Strava (Sair)"
+              className="flex items-center gap-1 rounded-lg bg-gray-800/80 hover:bg-rose-500/10 hover:border-rose-500/40 hover:text-rose-400 px-2.5 py-1.5 text-xs text-gray-400 transition border border-gray-700/60"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Sair</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Primary KPI Grid */}

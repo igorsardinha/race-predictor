@@ -65,6 +65,51 @@ export default function RacePredictorPage() {
   // 5. Estratégia de Ritmo
   const [strategy, setStrategy] = useState<"even-effort" | "even-pace" | "negative-split">("even-effort");
 
+  // Renova o token OAuth expirado do Strava via refresh_token
+  const refreshStravaToken = async (rToken: string): Promise<StravaAuthState | null> => {
+    try {
+      const res = await fetch("/api/strava/token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          grantType: "refresh_token",
+          refreshToken: rToken,
+        }),
+      });
+      const data = await res.json();
+      if (data.accessToken) {
+        const newAuth: StravaAuthState = {
+          connected: true,
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken || rToken,
+          expiresAt: data.expiresAt,
+          athlete: data.athlete || authState.athlete,
+        };
+        setAuthState(newAuth);
+        localStorage.setItem("racepredictor_strava_auth", JSON.stringify(newAuth));
+        return newAuth;
+      }
+    } catch {
+      // falha silenciosa na tentativa de renovação
+    }
+    return null;
+  };
+
+  // Desconecta e limpa a sessão do Strava
+  const handleDisconnectStrava = () => {
+    setAuthState({
+      connected: false,
+      accessToken: "",
+      refreshToken: "",
+      expiresAt: 0,
+      athlete: null,
+    });
+    setActivities([]);
+    localStorage.removeItem("racepredictor_strava_auth");
+    localStorage.removeItem("racepredictor_activities_cache");
+    setErrorMessage(null);
+  };
+
   // Verifica se há sessão salva do Strava no localStorage e trata retorno de OAuth (?code=...)
   useEffect(() => {
     const savedAuth = localStorage.getItem("racepredictor_strava_auth");
@@ -72,13 +117,21 @@ export default function RacePredictorPage() {
 
     if (savedAuth) {
       try {
-        const parsed = JSON.parse(savedAuth);
+        const parsed: StravaAuthState = JSON.parse(savedAuth);
         if (parsed.accessToken) {
           setAuthState(parsed);
           if (savedActivities) {
             setActivities(JSON.parse(savedActivities));
-          } else {
-            fetchActivitiesFromStrava(parsed.accessToken);
+          }
+          // Se o token estiver expirado (ou prestes a expirar em 5 min), renova silenciosamente
+          if (parsed.refreshToken && parsed.expiresAt && Date.now() / 1000 >= parsed.expiresAt - 300) {
+            refreshStravaToken(parsed.refreshToken).then((newAuth) => {
+              if (newAuth && !savedActivities) {
+                fetchActivitiesFromStrava(newAuth.accessToken, newAuth.refreshToken);
+              }
+            });
+          } else if (!savedActivities) {
+            fetchActivitiesFromStrava(parsed.accessToken, parsed.refreshToken);
           }
         }
       } catch {
@@ -119,7 +172,7 @@ export default function RacePredictorPage() {
         };
         setAuthState(auth);
         localStorage.setItem("racepredictor_strava_auth", JSON.stringify(auth));
-        await fetchActivitiesFromStrava(data.accessToken);
+        await fetchActivitiesFromStrava(data.accessToken, data.refreshToken);
       } else {
         setErrorMessage(data.error || "Erro ao conectar com sua conta do Strava.");
       }
@@ -130,21 +183,64 @@ export default function RacePredictorPage() {
     }
   };
 
-  // Baixa as corridas das últimas 24 semanas do Strava
-  const fetchActivitiesFromStrava = async (token: string) => {
+  // Baixa as corridas das últimas 24 semanas do Strava (com auto-renovação de token)
+  const fetchActivitiesFromStrava = async (token?: string, rToken?: string) => {
+    let activeToken = token || authState.accessToken;
+    let activeRefreshToken = rToken || authState.refreshToken;
+
+    // Se o token estiver expirado ou perto de expirar e houver refresh token, renova previamente
+    if (
+      activeRefreshToken &&
+      authState.expiresAt &&
+      Date.now() / 1000 >= authState.expiresAt - 300
+    ) {
+      const refreshed = await refreshStravaToken(activeRefreshToken);
+      if (refreshed) {
+        activeToken = refreshed.accessToken;
+        activeRefreshToken = refreshed.refreshToken;
+      }
+    }
+
     setIsLoadingRuns(true);
     setErrorMessage(null);
     try {
       const res = await fetch("/api/strava/activities", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ accessToken: token }),
+        body: JSON.stringify({
+          accessToken: activeToken,
+          refreshToken: activeRefreshToken,
+        }),
       });
       const data = await res.json();
+
+      // Se a API renovou o token automaticamente:
+      if (data.newAuth) {
+        const updatedAuth: StravaAuthState = {
+          ...authState,
+          accessToken: data.newAuth.accessToken,
+          refreshToken: data.newAuth.refreshToken,
+          expiresAt: data.newAuth.expiresAt,
+        };
+        setAuthState(updatedAuth);
+        localStorage.setItem("racepredictor_strava_auth", JSON.stringify(updatedAuth));
+      }
 
       if (data.activities && Array.isArray(data.activities)) {
         setActivities(data.activities);
         localStorage.setItem("racepredictor_activities_cache", JSON.stringify(data.activities));
+      } else if (res.status === 401 || data.unauthorized) {
+        // Tenta renovar pelo cliente e repetir uma vez
+        if (activeRefreshToken) {
+          const refreshed = await refreshStravaToken(activeRefreshToken);
+          if (refreshed) {
+            await fetchActivitiesFromStrava(refreshed.accessToken, refreshed.refreshToken);
+            return;
+          }
+        }
+        // Se não conseguiu renovar, desconecta e pede novo login
+        handleDisconnectStrava();
+        setErrorMessage("Sua sessão do Strava expirou. Por favor, conecte-se novamente.");
       } else {
         setErrorMessage(data.error || "Não foi possível carregar as corridas do Strava.");
       }
@@ -269,7 +365,8 @@ export default function RacePredictorPage() {
         totalRunsCount={activities.length}
         isLoadingRuns={isLoadingRuns}
         onConnectStrava={handleConnectStrava}
-        onRefreshRuns={() => fetchActivitiesFromStrava(authState.accessToken)}
+        onRefreshRuns={() => fetchActivitiesFromStrava(authState.accessToken, authState.refreshToken)}
+        onDisconnectStrava={handleDisconnectStrava}
       />
 
       {/* Alerta de erro */}
@@ -329,6 +426,7 @@ export default function RacePredictorPage() {
             athlete={authState.athlete || null}
             metrics={athleteMetrics}
             onOpenActivities={() => setIsActivitiesModalOpen(true)}
+            onDisconnectStrava={handleDisconnectStrava}
           />
 
           {/* Card do Clima / Meteorologia */}
