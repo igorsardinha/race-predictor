@@ -47,7 +47,7 @@ export function PwaInstallPrompt() {
           </div>
           <div>
             <h4 className="text-xs font-bold text-white">Instalar Race Predictor PRO</h4>
-            <p className="text-[11px] text-gray-400">
+            <p className="text-xs text-gray-400">
               Acesse suas previsões de prova offline na largada
             </p>
           </div>

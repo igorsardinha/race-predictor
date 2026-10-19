@@ -133,12 +133,12 @@ export function RouteMap({ gpx }: RouteMapProps) {
           {/* Marcadores de KM ao longo do percurso */}
           {kmMarkers.map((m) => (
             <g key={m.km}>
-              <circle cx={m.x} cy={m.y} r="8" fill="#0f172a" stroke="#38bdf8" strokeWidth="1.5" />
+              <circle cx={m.x} cy={m.y} r="9" fill="#0f172a" stroke="#38bdf8" strokeWidth="1.5" />
               <text
                 x={m.x}
-                y={m.y + 3}
+                y={m.y + 3.5}
                 fill="#ffffff"
-                fontSize="8"
+                fontSize="10"
                 fontWeight="bold"
                 textAnchor="middle"
               >
@@ -151,7 +151,7 @@ export function RouteMap({ gpx }: RouteMapProps) {
           <g>
             <circle cx={startPt.x} cy={startPt.y} r="10" fill="#10b981" opacity="0.3" />
             <circle cx={startPt.x} cy={startPt.y} r="5" fill="#10b981" stroke="#ffffff" strokeWidth="1.5" />
-            <text x={startPt.x} y={startPt.y - 9} fill="#34d399" fontSize="9" fontWeight="bold" textAnchor="middle">
+            <text x={startPt.x} y={startPt.y - 9} fill="#34d399" fontSize="11" fontWeight="bold" textAnchor="middle">
               LARGADA
             </text>
           </g>
@@ -160,14 +160,14 @@ export function RouteMap({ gpx }: RouteMapProps) {
           <g>
             <circle cx={endPt.x} cy={endPt.y} r="10" fill="#f43f5e" opacity="0.3" />
             <circle cx={endPt.x} cy={endPt.y} r="5" fill="#f43f5e" stroke="#ffffff" strokeWidth="1.5" />
-            <text x={endPt.x} y={endPt.y - 9} fill="#fb7185" fontSize="9" fontWeight="bold" textAnchor="middle">
+            <text x={endPt.x} y={endPt.y - 9} fill="#fb7185" fontSize="11" fontWeight="bold" textAnchor="middle">
               CHEGADA
             </text>
           </g>
         </svg>
 
         {/* Bússola no canto */}
-        <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-lg bg-gray-900/80 px-2 py-1 text-[10px] text-gray-400 border border-gray-800">
+        <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-lg bg-gray-900/80 px-2 py-1 text-xs text-gray-400 border border-gray-800">
           <Compass className="h-3 w-3 text-sky-400" />
           <span>Norte ↑</span>
         </div>

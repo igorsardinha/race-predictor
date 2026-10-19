@@ -85,13 +85,13 @@ export function AthleteProfileCard({
       </div>
 
       {/* Primary KPI Grid */}
-      <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-2.5 sm:gap-3 sm:grid-cols-4">
         {/* VDOT */}
-        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 sm:p-3.5">
+        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 sm:p-3.5 flex flex-col justify-between">
           <div className="flex items-start justify-between gap-1 text-gray-400">
             <div className="min-w-0">
-              <span className="block text-xs font-bold text-gray-200">VDOT</span>
-              <span className="block text-[10px] text-gray-500 truncate">Jack Daniels</span>
+              <span className="block text-xs sm:text-sm font-bold text-gray-200">VDOT</span>
+              <span className="block text-xs text-gray-400">Jack Daniels</span>
             </div>
             <InfoTooltip
               title="Índice VDOT (Daniels & Gilbert)"
@@ -101,9 +101,9 @@ export function AthleteProfileCard({
               align="left"
             />
           </div>
-          <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-            <span className="text-xl sm:text-2xl font-black text-white font-mono">{metrics.estimatedVdot}</span>
-            <span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] font-bold text-amber-400 border border-amber-500/20 whitespace-nowrap">
+          <div className="mt-2 flex flex-wrap items-baseline gap-1.5">
+            <span className="text-2xl sm:text-3xl font-black text-white font-mono">{metrics.estimatedVdot}</span>
+            <span className="rounded bg-amber-500/10 px-2 py-0.5 text-xs font-bold text-amber-400 border border-amber-500/20">
               {metrics.estimatedVdot >= 50
                 ? "Avançado"
                 : metrics.estimatedVdot >= 42
@@ -111,15 +111,15 @@ export function AthleteProfileCard({
                 : "Base"}
             </span>
           </div>
-          <p className="mt-1 text-[10px] text-gray-500 font-mono truncate">VO₂max equiv.</p>
+          <p className="mt-1 text-xs text-gray-400 font-mono">VO₂max equiv.</p>
         </div>
 
         {/* Expoente de Fadiga Riegel */}
-        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 sm:p-3.5">
+        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 sm:p-3.5 flex flex-col justify-between">
           <div className="flex items-start justify-between gap-1 text-gray-400">
             <div className="min-w-0">
-              <span className="block text-xs font-bold text-gray-200">Fadiga (b)</span>
-              <span className="block text-[10px] text-gray-500 truncate">Pete Riegel</span>
+              <span className="block text-xs sm:text-sm font-bold text-gray-200">Fadiga (b)</span>
+              <span className="block text-xs text-gray-400">Pete Riegel</span>
             </div>
             <InfoTooltip
               title="Expoente de Fadiga de Pete Riegel"
@@ -129,49 +129,49 @@ export function AthleteProfileCard({
               align="center"
             />
           </div>
-          <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-            <span className="text-xl sm:text-2xl font-black text-white font-mono">{metrics.fatigueExponent}</span>
-            <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-bold text-emerald-400 border border-emerald-500/20 whitespace-nowrap">
+          <div className="mt-2 flex flex-wrap items-baseline gap-1.5">
+            <span className="text-2xl sm:text-3xl font-black text-white font-mono">{metrics.fatigueExponent}</span>
+            <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-xs font-bold text-emerald-400 border border-emerald-500/20">
               {metrics.fatigueExponent <= 1.06
-                ? "Resistência Alta"
+                ? "Alta Resist."
                 : metrics.fatigueExponent <= 1.08
                 ? "Equilibrado"
                 : "Fadiga Precoce"}
             </span>
           </div>
-          <p className="mt-1 text-[10px] text-gray-500 font-mono truncate">Curva Riegel</p>
+          <p className="mt-1 text-xs text-gray-400 font-mono">Curva Riegel</p>
         </div>
 
         {/* Volume Semanal */}
-        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 sm:p-3.5">
+        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 sm:p-3.5 flex flex-col justify-between">
           <div className="flex items-start justify-between gap-1 text-gray-400">
             <div className="min-w-0">
-              <span className="block text-xs font-bold text-gray-200">Volume</span>
-              <span className="block text-[10px] text-gray-500 truncate">Média Semanal</span>
+              <span className="block text-xs sm:text-sm font-bold text-gray-200">Volume</span>
+              <span className="block text-xs text-gray-400">Média Semanal</span>
             </div>
-            <Calendar className="h-3.5 w-3.5 text-gray-500 shrink-0 mt-0.5" />
+            <Calendar className="h-4 w-4 text-gray-400 shrink-0 mt-0.5" />
           </div>
           <div className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
-            <span className="text-xl sm:text-2xl font-black text-white font-mono">{metrics.avgWeeklyDistanceKm}</span>
-            <span className="text-[11px] font-medium text-gray-400">km/sem</span>
+            <span className="text-2xl sm:text-3xl font-black text-white font-mono">{metrics.avgWeeklyDistanceKm}</span>
+            <span className="text-xs font-semibold text-gray-400">km/sem</span>
           </div>
-          <p className="mt-1 text-[10px] text-gray-500 font-mono truncate">Total: {metrics.totalDistanceKm} km</p>
+          <p className="mt-1 text-xs text-gray-400 font-mono">Total: {metrics.totalDistanceKm} km</p>
         </div>
 
         {/* Maior Rodagem */}
-        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 sm:p-3.5">
+        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 sm:p-3.5 flex flex-col justify-between">
           <div className="flex items-start justify-between gap-1 text-gray-400">
             <div className="min-w-0">
-              <span className="block text-xs font-bold text-gray-200">Longão</span>
-              <span className="block text-[10px] text-gray-500 truncate">Maior Rodagem</span>
+              <span className="block text-xs sm:text-sm font-bold text-gray-200">Longão</span>
+              <span className="block text-xs text-gray-400">Maior Rodagem</span>
             </div>
-            <TrendingUp className="h-3.5 w-3.5 text-gray-500 shrink-0 mt-0.5" />
+            <TrendingUp className="h-4 w-4 text-gray-400 shrink-0 mt-0.5" />
           </div>
           <div className="mt-2 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5">
-            <span className="text-xl sm:text-2xl font-black text-white font-mono">{metrics.longestRunKm}</span>
-            <span className="text-[11px] font-medium text-gray-400">km</span>
+            <span className="text-2xl sm:text-3xl font-black text-white font-mono">{metrics.longestRunKm}</span>
+            <span className="text-xs font-semibold text-gray-400">km</span>
           </div>
-          <p className="mt-1 text-[10px] text-gray-500 font-mono truncate">
+          <p className="mt-1 text-xs text-gray-400 font-mono">
             {metrics.longestRunKm >= 28 ? "Base Maratona Ok" : "Base < 28km"}
           </p>
         </div>
@@ -180,37 +180,37 @@ export function AthleteProfileCard({
       {/* Benchmarks & Aerobic Base Bar */}
       <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {/* Melhores marcas identificadas */}
-        <div className="min-w-0 rounded-xl border border-gray-800/80 bg-gray-950/30 p-3">
-          <span className="text-xs font-semibold text-gray-300">
+        <div className="min-w-0 rounded-xl border border-gray-800/80 bg-gray-950/40 p-3.5">
+          <span className="text-xs sm:text-sm font-bold text-gray-200 block">
             Melhores Marcas Identificadas (Pista Plana)
           </span>
-          <div className="mt-2.5 grid grid-cols-3 gap-1.5 sm:gap-2 text-center">
-            <div className="min-w-0 rounded-lg bg-gray-900 p-1.5 sm:p-2 border border-gray-800">
-              <span className="text-[10px] uppercase font-bold text-gray-400 font-mono">5 KM</span>
-              <p className="text-xs sm:text-sm font-bold text-white mt-0.5 font-mono truncate">
+          <div className="mt-3 grid grid-cols-3 gap-2 text-center">
+            <div className="min-w-0 rounded-lg bg-gray-900 p-2 sm:p-2.5 border border-gray-800">
+              <span className="text-xs uppercase font-black text-orange-400 font-mono block">5 KM</span>
+              <p className="text-sm sm:text-base font-black text-white mt-1 font-mono truncate">
                 {metrics.best5kTimeSec ? formatTimeSec(metrics.best5kTimeSec) : "--"}
               </p>
-              <span className="text-[9px] sm:text-[10px] text-gray-400 font-mono block truncate">
+              <span className="text-xs text-gray-300 font-mono block mt-0.5 truncate">
                 {metrics.best5kTimeSec ? `${formatPaceSecKm(metrics.best5kTimeSec / 5)}/km` : ""}
               </span>
             </div>
 
-            <div className="min-w-0 rounded-lg bg-gray-900 p-1.5 sm:p-2 border border-gray-800">
-              <span className="text-[10px] uppercase font-bold text-gray-400 font-mono">10 KM</span>
-              <p className="text-xs sm:text-sm font-bold text-white mt-0.5 font-mono truncate">
+            <div className="min-w-0 rounded-lg bg-gray-900 p-2 sm:p-2.5 border border-gray-800">
+              <span className="text-xs uppercase font-black text-orange-400 font-mono block">10 KM</span>
+              <p className="text-sm sm:text-base font-black text-white mt-1 font-mono truncate">
                 {metrics.best10kTimeSec ? formatTimeSec(metrics.best10kTimeSec) : "--"}
               </p>
-              <span className="text-[9px] sm:text-[10px] text-gray-400 font-mono block truncate">
+              <span className="text-xs text-gray-300 font-mono block mt-0.5 truncate">
                 {metrics.best10kTimeSec ? `${formatPaceSecKm(metrics.best10kTimeSec / 10)}/km` : ""}
               </span>
             </div>
 
-            <div className="min-w-0 rounded-lg bg-gray-900 p-1.5 sm:p-2 border border-gray-800">
-              <span className="text-[10px] uppercase font-bold text-gray-400 font-mono">21.1 KM</span>
-              <p className="text-xs sm:text-sm font-bold text-white mt-0.5 font-mono truncate">
+            <div className="min-w-0 rounded-lg bg-gray-900 p-2 sm:p-2.5 border border-gray-800">
+              <span className="text-xs uppercase font-black text-orange-400 font-mono block">21.1 KM</span>
+              <p className="text-sm sm:text-base font-black text-white mt-1 font-mono truncate">
                 {metrics.bestHalfTimeSec ? formatTimeSec(metrics.bestHalfTimeSec) : "--"}
               </p>
-              <span className="text-[9px] sm:text-[10px] text-gray-400 font-mono block truncate">
+              <span className="text-xs text-gray-300 font-mono block mt-0.5 truncate">
                 {metrics.bestHalfTimeSec ? `${formatPaceSecKm(metrics.bestHalfTimeSec / 21.0975)}/km` : ""}
               </span>
             </div>
@@ -218,10 +218,10 @@ export function AthleteProfileCard({
         </div>
 
         {/* Pontuação da Base Aeróbica */}
-        <div className="min-w-0 rounded-xl border border-gray-800/80 bg-gray-950/30 p-3 flex flex-col justify-between">
+        <div className="min-w-0 rounded-xl border border-gray-800/80 bg-gray-950/40 p-3.5 flex flex-col justify-between">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 min-w-0">
-              <span className="text-xs font-semibold text-gray-300 truncate">
+              <span className="text-xs sm:text-sm font-bold text-gray-200 truncate">
                 Índice de Base Aeróbica
               </span>
               <InfoTooltip
@@ -232,23 +232,23 @@ export function AthleteProfileCard({
                 align="right"
               />
             </div>
-            <span className="text-xs font-bold text-orange-400 font-mono shrink-0">
+            <span className="text-sm sm:text-base font-black text-orange-400 font-mono shrink-0">
               {metrics.aerobicBaseScore} / 100
             </span>
           </div>
-          <div className="mt-2 h-2 w-full rounded-full bg-gray-800 overflow-hidden">
+          <div className="mt-2.5 h-2.5 w-full rounded-full bg-gray-800 overflow-hidden">
             <div
               className="h-full bg-orange-500 rounded-full transition-all duration-700"
               style={{ width: `${Math.min(100, Math.max(10, metrics.aerobicBaseScore))}%` }}
             />
           </div>
-          <div className="mt-2.5 flex flex-wrap items-center justify-between gap-1 text-[11px] text-gray-400">
-            <span className="flex items-center gap-1 font-mono">
-              <Heart className="h-3 w-3 text-rose-500 shrink-0" />
-              FC Média: {metrics.avgHeartRate ? `${metrics.avgHeartRate} bpm` : "N/D"}
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-1 text-xs text-gray-300">
+            <span className="flex items-center gap-1.5 font-mono">
+              <Heart className="h-3.5 w-3.5 text-rose-500 shrink-0" />
+              FC Média: <strong>{metrics.avgHeartRate ? `${metrics.avgHeartRate} bpm` : "N/D"}</strong>
             </span>
-            <span className="capitalize text-gray-300">
-              Tendência: <strong className="text-emerald-400">{metrics.recentFormTrend}</strong>
+            <span className="capitalize">
+              Tendência: <strong className="text-emerald-400 font-semibold">{metrics.recentFormTrend}</strong>
             </span>
           </div>
         </div>

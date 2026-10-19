@@ -56,25 +56,25 @@ export function Navbar({
                     {athlete.firstname[0]}
                   </div>
                 )}
-                <div className="flex flex-col text-left min-w-0 max-w-[85px] sm:max-w-none">
-                  <span className="text-xs font-semibold text-white leading-tight truncate">
+                <div className="flex flex-col text-left min-w-0 max-w-[120px] sm:max-w-none">
+                  <span className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
                     {athlete.firstname} <span className="hidden sm:inline">{athlete.lastname}</span>
                   </span>
-                  <span className="text-[10px] text-gray-400 flex items-center gap-1 font-mono truncate">
-                    <CheckCircle2 className="h-3 w-3 text-emerald-400 shrink-0" />
+                  <span className="text-xs text-gray-400 flex items-center gap-1 font-mono truncate">
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                     <span className="hidden sm:inline">{totalRunsCount} corridas (24 sem)</span>
-                    <span className="sm:hidden">{totalRunsCount} runs (24s)</span>
+                    <span className="sm:hidden">{totalRunsCount} corridas</span>
                   </span>
                 </div>
                 <button
                   onClick={onRefreshRuns}
                   disabled={isLoadingRuns}
                   title="Sincronizar histórico do Strava"
-                  className="p-1 shrink-0 rounded-full hover:bg-gray-800 text-gray-400 hover:text-white transition disabled:opacity-50"
+                  className="p-1.5 shrink-0 rounded-full hover:bg-gray-800 text-gray-400 hover:text-white transition disabled:opacity-50"
                   aria-label="Sincronizar histórico"
                 >
                   <RefreshCw
-                    className={`h-3 w-3 ${isLoadingRuns ? "animate-spin text-orange-500" : ""}`}
+                    className={`h-3.5 w-3.5 ${isLoadingRuns ? "animate-spin text-orange-500" : ""}`}
                   />
                 </button>
               </div>
@@ -83,11 +83,11 @@ export function Navbar({
               <button
                 onClick={onDisconnectStrava}
                 title="Desconectar conta do Strava (Sair)"
-                className="flex items-center gap-1.5 rounded-full border border-gray-800 bg-gray-900/80 hover:bg-rose-500/10 hover:border-rose-500/40 px-2.5 py-1.5 text-xs font-medium text-gray-400 hover:text-rose-400 transition"
+                className="flex items-center gap-1.5 rounded-full border border-gray-800 bg-gray-900/80 hover:bg-rose-500/10 hover:border-rose-500/40 px-3 py-1.5 text-xs font-semibold text-gray-300 hover:text-rose-400 transition"
                 aria-label="Sair da conta"
               >
                 <LogOut className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline font-semibold">Sair</span>
+                <span className="hidden sm:inline">Sair</span>
               </button>
             </div>
           ) : (

@@ -196,14 +196,14 @@ export function WeatherCard({
         {/* City Autocomplete Search Bar */}
         <div className="relative" ref={dropdownRef}>
           <div className="relative">
-            <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-gray-500" />
+            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
             <input
               type="text"
               placeholder="Pesquisar cidade..."
               value={searchQuery}
               onChange={(e) => handleSearchChange(e.target.value)}
               onFocus={() => searchQuery.trim().length >= 2 && setShowDropdown(true)}
-              className="w-full rounded-lg border border-gray-800 bg-gray-900 py-2 pl-9 pr-8 text-xs text-white placeholder-gray-500 focus:border-orange-500 focus:outline-none"
+              className="w-full rounded-xl border border-gray-800 bg-gray-900 py-2.5 pl-9 pr-9 text-sm text-white placeholder-gray-500 focus:border-orange-500 focus:outline-none"
             />
             {searchQuery && (
               <button
@@ -211,9 +211,9 @@ export function WeatherCard({
                   setSearchQuery("");
                   setShowDropdown(false);
                 }}
-                className="absolute right-2.5 top-2.5 text-gray-400 hover:text-white"
+                className="absolute right-3 top-3 text-gray-400 hover:text-white"
               >
-                <X className="h-3.5 w-3.5" />
+                <X className="h-4 w-4" />
               </button>
             )}
           </div>
@@ -231,18 +231,18 @@ export function WeatherCard({
                     <button
                       key={city.id}
                       onClick={() => handleSelectCity(city)}
-                      className="flex w-full items-center justify-between px-3.5 py-2 text-left text-xs text-gray-200 hover:bg-gray-800 hover:text-white transition"
+                      className="flex w-full items-center justify-between px-3.5 py-2.5 text-left text-xs sm:text-sm text-gray-200 hover:bg-gray-800 hover:text-white transition"
                     >
                       <div className="flex items-center gap-2 min-w-0">
-                        <MapPin className="h-3 w-3 text-orange-400 shrink-0" />
+                        <MapPin className="h-3.5 w-3.5 text-orange-400 shrink-0" />
                         <span className="font-semibold truncate">{city.name}</span>
                         {city.admin1 && (
-                          <span className="text-gray-400 text-[11px] truncate">
+                          <span className="text-gray-400 text-xs truncate">
                             • {city.admin1}
                           </span>
                         )}
                       </div>
-                      <span className="text-[10px] text-gray-400 font-mono shrink-0 ml-2">
+                      <span className="text-xs text-gray-400 font-mono shrink-0 ml-2">
                         {city.country}
                       </span>
                     </button>
@@ -259,12 +259,12 @@ export function WeatherCard({
 
         {/* Quick popular city chips */}
         <div className="flex flex-wrap items-center gap-1.5 pt-1">
-          <span className="text-[11px] text-gray-500 font-medium">Cidades:</span>
+          <span className="text-xs text-gray-400 font-semibold">Cidades:</span>
           {POPULAR_CITIES.map((c) => (
             <button
               key={c.name}
               onClick={() => onSelectLocation(c.lat, c.lon, `${c.name}, ${c.state}`)}
-              className="rounded-md bg-gray-900 hover:bg-gray-800 px-2 py-0.5 text-[11px] text-gray-300 hover:text-white border border-gray-800 transition"
+              className="rounded-lg bg-gray-900 hover:bg-gray-800 px-2.5 py-1 text-xs text-gray-300 hover:text-white border border-gray-800 transition"
             >
               {c.name}
             </button>
@@ -273,33 +273,33 @@ export function WeatherCard({
       </div>
 
       {/* Date & Time Picker */}
-      <div className="mt-3 grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 rounded-xl bg-gray-950/60 p-3 border border-gray-800">
+      <div className="mt-3 grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 rounded-xl bg-gray-950/60 p-3.5 border border-gray-800">
         <div className="flex items-center gap-1.5 sm:gap-2">
           <Calendar className="h-4 w-4 text-gray-400 shrink-0" />
-          <span className="text-xs text-gray-400 shrink-0">Data:</span>
+          <span className="text-xs font-semibold text-gray-400 shrink-0">Data:</span>
           <input
             type="date"
             value={dateStr}
             onChange={(e) => setDateStr(e.target.value)}
-            className="w-full sm:w-auto rounded-lg border border-gray-800 bg-gray-900 px-2 py-1 text-xs text-white focus:border-orange-500 focus:outline-none"
+            className="w-full sm:w-auto rounded-lg border border-gray-800 bg-gray-900 px-2.5 py-1.5 text-xs sm:text-sm text-white focus:border-orange-500 focus:outline-none"
           />
         </div>
 
         <div className="flex items-center gap-1.5 sm:gap-2">
           <Clock className="h-4 w-4 text-gray-400 shrink-0" />
-          <span className="text-xs text-gray-400 shrink-0">Hora:</span>
+          <span className="text-xs font-semibold text-gray-400 shrink-0">Hora:</span>
           <input
             type="time"
             value={timeStr}
             onChange={(e) => setTimeStr(e.target.value)}
-            className="w-full sm:w-auto rounded-lg border border-gray-800 bg-gray-900 px-2 py-1 text-xs text-white focus:border-orange-500 focus:outline-none"
+            className="w-full sm:w-auto rounded-lg border border-gray-800 bg-gray-900 px-2.5 py-1.5 text-xs sm:text-sm text-white focus:border-orange-500 focus:outline-none"
           />
         </div>
 
         <button
           onClick={handleApplyDateTime}
           disabled={isLoadingWeather}
-          className="col-span-2 sm:col-span-1 sm:ml-auto w-full sm:w-auto flex items-center justify-center gap-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 px-3 py-1.5 text-xs font-semibold text-white transition border border-gray-700 disabled:opacity-50"
+          className="col-span-2 sm:col-span-1 sm:ml-auto w-full sm:w-auto flex items-center justify-center gap-1.5 rounded-lg bg-gray-800 hover:bg-gray-700 px-3.5 py-2 text-xs sm:text-sm font-bold text-white transition border border-gray-700 disabled:opacity-50"
         >
           <RefreshCw
             className={`h-3.5 w-3.5 ${isLoadingWeather ? "animate-spin text-orange-400" : ""}`}
@@ -309,11 +309,11 @@ export function WeatherCard({
       </div>
 
       {/* Weather Metrics Grid */}
-      <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+      <div className="mt-4 grid grid-cols-2 gap-2.5 sm:gap-3 sm:grid-cols-4">
         {/* Temperatura */}
-        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-2.5 sm:p-3">
-          <div className="flex items-center justify-between text-gray-400 gap-1">
-            <span className="text-[11px] font-medium truncate">Temperatura</span>
+        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-gray-300 gap-1">
+            <span className="text-xs sm:text-sm font-bold truncate">Temperatura</span>
             <InfoTooltip
               title="Temperatura do Ar e Faixa Ótima"
               formula="Faixa Ótima: 8°C - 12°C; Penalidade: ~0.45% por °C acima de 12°C"
@@ -322,18 +322,18 @@ export function WeatherCard({
               align="left"
             />
           </div>
-          <p className="mt-1 text-xl sm:text-2xl font-black text-white font-mono truncate">
+          <p className="mt-1.5 text-2xl sm:text-3xl font-black text-white font-mono truncate">
             {weather.temperatureC}°C
           </p>
-          <span className="text-[10px] text-gray-400 font-mono block truncate">
+          <span className="text-xs text-gray-400 font-mono block truncate mt-1">
             Sensação: {weather.apparentTemperatureC}°C
           </span>
         </div>
 
         {/* Ponto de Orvalho (Dew Point) */}
-        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-2.5 sm:p-3">
-          <div className="flex items-center justify-between text-gray-400 gap-1">
-            <span className="text-[11px] font-medium truncate">Ponto de Orvalho</span>
+        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-gray-300 gap-1">
+            <span className="text-xs sm:text-sm font-bold truncate">Ponto de Orvalho</span>
             <InfoTooltip
               title="Equação de Magnus-Tetens (Ponto de Orvalho)"
               formula="α = (17.27·T)/(237.7+T) + ln(RH/100); T_dew = (237.7·α)/(17.27 - α)"
@@ -342,18 +342,18 @@ export function WeatherCard({
               align="center"
             />
           </div>
-          <p className="mt-1 text-xl sm:text-2xl font-black text-cyan-400 font-mono truncate">
+          <p className="mt-1.5 text-2xl sm:text-3xl font-black text-cyan-400 font-mono truncate">
             {weather.dewPointC}°C
           </p>
-          <span className="text-[10px] text-gray-400 font-mono block truncate">
+          <span className="text-xs text-gray-400 font-mono block truncate mt-1">
             Umidade: {weather.relativeHumidity}%
           </span>
         </div>
 
         {/* Vento */}
-        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-2.5 sm:p-3">
-          <div className="flex items-center justify-between text-gray-400 gap-1">
-            <span className="text-[11px] font-medium truncate">Vento</span>
+        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-gray-300 gap-1">
+            <span className="text-xs sm:text-sm font-bold truncate">Vento</span>
             <InfoTooltip
               title="Velocidade e Azimute do Vento"
               formula="v_vento (km/h) a 10m de altitude; Rumo angular θ (0° a 360°)"
@@ -362,19 +362,19 @@ export function WeatherCard({
               align="center"
             />
           </div>
-          <p className="mt-1 text-xl sm:text-2xl font-black text-white font-mono truncate">
+          <p className="mt-1.5 text-2xl sm:text-3xl font-black text-white font-mono truncate">
             {weather.windSpeedKmh}{" "}
-            <span className="text-xs font-normal text-gray-400">km/h</span>
+            <span className="text-xs font-semibold text-gray-400">km/h</span>
           </p>
-          <span className="text-[10px] text-gray-400 font-mono block truncate">
+          <span className="text-xs text-gray-400 font-mono block truncate mt-1">
             {weather.windDirectionDeg}° ({weather.weatherDescription})
           </span>
         </div>
 
         {/* Penalidade Fisiológica */}
-        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-2.5 sm:p-3">
-          <div className="flex items-center justify-between text-gray-400 gap-1">
-            <span className="text-[11px] font-medium truncate">Penalidade Térmica</span>
+        <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/50 p-3 flex flex-col justify-between">
+          <div className="flex items-center justify-between text-gray-300 gap-1">
+            <span className="text-xs sm:text-sm font-bold truncate">Penalidade Térmica</span>
             <InfoTooltip
               title="Ajuste Percentual no Ritmo (Calor e Umidade)"
               formula="ΔPace% = [0.45% × max(0, T - 12°C)] + f(T_dew)"
@@ -383,10 +383,10 @@ export function WeatherCard({
               align="right"
             />
           </div>
-          <p className="mt-1 text-xl sm:text-2xl font-black text-orange-400 font-mono truncate">
+          <p className="mt-1.5 text-2xl sm:text-3xl font-black text-orange-400 font-mono truncate">
             +{weather.weatherPenaltyPercent}%
           </p>
-          <span className="text-[10px] text-gray-400 block truncate">
+          <span className="text-xs text-gray-400 block truncate mt-1">
             Ajuste no ritmo de prova
           </span>
         </div>

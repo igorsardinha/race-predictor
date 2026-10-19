@@ -73,21 +73,21 @@ export function ActivitiesListModal({
         {/* Search & Sort Filters */}
         <div className="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 border-b border-gray-800/80 bg-gray-900/40 px-4 sm:px-6 py-2.5 sm:py-3">
           <div className="relative flex-1 min-w-[160px] sm:min-w-[240px]">
-            <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-gray-500" />
+            <Search className="absolute left-3 top-3 h-4 w-4 text-gray-500" />
             <input
               type="text"
               placeholder="Filtrar por nome do treino..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full rounded-lg border border-gray-800 bg-gray-900 py-1.5 sm:py-2 pl-9 pr-4 text-xs text-white placeholder-gray-500 focus:border-orange-500 focus:outline-none"
+              className="w-full rounded-xl border border-gray-800 bg-gray-900 py-2.5 pl-9 pr-4 text-xs sm:text-sm text-white placeholder-gray-500 focus:border-orange-500 focus:outline-none"
             />
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs">
-            <span className="text-gray-400 hidden sm:inline">Ordenar:</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-xs">
+            <span className="text-gray-400 font-semibold hidden sm:inline">Ordenar:</span>
             <button
               onClick={() => toggleSort("date")}
-              className={`flex items-center gap-1 rounded-lg px-2 sm:px-2.5 py-1 sm:py-1.5 transition ${
+              className={`flex items-center gap-1 rounded-lg px-2.5 sm:px-3 py-1.5 font-semibold transition ${
                 sortBy === "date"
                   ? "bg-orange-500/20 text-orange-400 border border-orange-500/40"
                   : "bg-gray-800 text-gray-300"
@@ -97,7 +97,7 @@ export function ActivitiesListModal({
             </button>
             <button
               onClick={() => toggleSort("distance")}
-              className={`flex items-center gap-1 rounded-lg px-2 sm:px-2.5 py-1 sm:py-1.5 transition ${
+              className={`flex items-center gap-1 rounded-lg px-2.5 sm:px-3 py-1.5 font-semibold transition ${
                 sortBy === "distance"
                   ? "bg-orange-500/20 text-orange-400 border border-orange-500/40"
                   : "bg-gray-800 text-gray-300"
@@ -107,7 +107,7 @@ export function ActivitiesListModal({
             </button>
             <button
               onClick={() => toggleSort("pace")}
-              className={`flex items-center gap-1 rounded-lg px-2 sm:px-2.5 py-1 sm:py-1.5 transition ${
+              className={`flex items-center gap-1 rounded-lg px-2.5 sm:px-3 py-1.5 font-semibold transition ${
                 sortBy === "pace"
                   ? "bg-orange-500/20 text-orange-400 border border-orange-500/40"
                   : "bg-gray-800 text-gray-300"
@@ -119,7 +119,7 @@ export function ActivitiesListModal({
         </div>
 
         {/* Activities Table */}
-        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-3 sm:py-4">
           <div className="divide-y divide-gray-800/60">
             {filtered.map((activity) => {
               const distKm = parseFloat((activity.distance / 1000).toFixed(2));
@@ -132,19 +132,19 @@ export function ActivitiesListModal({
               return (
                 <div
                   key={activity.id}
-                  className="flex items-center justify-between py-2.5 sm:py-3 hover:bg-gray-900/40 px-2 rounded-lg transition gap-2"
+                  className="flex items-center justify-between py-3 hover:bg-gray-900/40 px-2 rounded-xl transition gap-3"
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 flex-1">
-                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20">
-                      <Zap className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                      <Zap className="h-5 w-5" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <h4 className="text-xs sm:text-sm font-semibold text-white leading-tight truncate">
+                      <h4 className="text-xs sm:text-sm font-bold text-white leading-tight truncate">
                         {activity.name}
                       </h4>
-                      <div className="mt-0.5 sm:mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-gray-400">
+                      <div className="mt-1 flex flex-wrap items-center gap-x-2.5 gap-y-0.5 text-xs text-gray-400">
                         <span className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" /> {dateStr}
+                          <Calendar className="h-3.5 w-3.5" /> {dateStr}
                         </span>
                         <span>•</span>
                         <span>D+ {activity.total_elevation_gain}m</span>
@@ -152,7 +152,7 @@ export function ActivitiesListModal({
                           <>
                             <span>•</span>
                             <span className="flex items-center gap-1 text-rose-400">
-                              <Heart className="h-3 w-3" /> {activity.average_heartrate} bpm
+                              <Heart className="h-3.5 w-3.5" /> {activity.average_heartrate} bpm
                             </span>
                           </>
                         )}
@@ -161,9 +161,9 @@ export function ActivitiesListModal({
                   </div>
 
                   <div className="text-right shrink-0">
-                    <span className="text-xs sm:text-sm font-black text-white font-mono">{distKm} km</span>
-                    <div className="text-[11px] text-gray-400 mt-0.5 font-mono">
-                      <strong className="text-orange-400 font-semibold">
+                    <span className="text-sm sm:text-base font-black text-white font-mono">{distKm} km</span>
+                    <div className="text-xs text-gray-300 mt-0.5 font-mono">
+                      <strong className="text-orange-400 font-bold">
                         {formatPaceSecKm(paceSecKm)}
                       </strong>{" "}
                       /km

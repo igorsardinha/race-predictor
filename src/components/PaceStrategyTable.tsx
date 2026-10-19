@@ -77,21 +77,21 @@ export function PaceStrategyTable({
 
         {/* Splits Table */}
         <div className="flex-1 overflow-y-auto px-2 sm:px-6 py-3 sm:py-4">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-gray-300">
-              <thead className="bg-gray-900/80 text-[11px] uppercase tracking-wider text-gray-400 sticky top-0">
+          <div className="overflow-x-auto touch-pan-x">
+            <table className="w-full text-left text-xs sm:text-sm text-gray-200 min-w-[700px]">
+              <thead className="bg-gray-900/95 text-xs uppercase tracking-wider text-gray-300 sticky top-0 backdrop-blur-md">
                 <tr>
-                  <th className="py-3 px-3">KM</th>
-                  <th className="py-3 px-3">Altimetria</th>
-                  <th className="py-3 px-3">Inclinação</th>
-                  <th className="py-3 px-3">Classificação</th>
-                  <th className="py-3 px-3">Custo Minetti</th>
-                  <th className="py-3 px-3 text-orange-400 font-bold">Ritmo Alvo</th>
-                  <th className="py-3 px-3">Tempo Parcial</th>
-                  <th className="py-3 px-3 text-right">Tempo Acumulado</th>
+                  <th className="py-3.5 px-3">KM</th>
+                  <th className="py-3.5 px-3">Altimetria</th>
+                  <th className="py-3.5 px-3">Inclinação</th>
+                  <th className="py-3.5 px-3">Classificação</th>
+                  <th className="py-3.5 px-3">Custo Minetti</th>
+                  <th className="py-3.5 px-3 text-orange-400 font-bold">Ritmo Alvo</th>
+                  <th className="py-3.5 px-3">Tempo Parcial</th>
+                  <th className="py-3.5 px-3 text-right">Tempo Acumulado</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-800/60">
+              <tbody className="divide-y divide-gray-800/80">
                 {splits.map((s) => {
                   let badgeColor = "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
                   let label = "Plano";
@@ -111,34 +111,34 @@ export function PaceStrategyTable({
                   }
 
                   return (
-                    <tr key={s.kmNumber} className="hover:bg-gray-900/40 transition">
-                      <td className="py-2.5 px-3 font-black text-white">KM {s.kmNumber}</td>
-                      <td className="py-2.5 px-3">
+                    <tr key={s.kmNumber} className="hover:bg-gray-900/60 transition">
+                      <td className="py-3 px-3 font-black text-white font-mono">KM {s.kmNumber}</td>
+                      <td className="py-3 px-3 font-mono">
                         {s.startElevation}m → {s.endElevation}m ({s.elevationChangeMeters > 0 ? "+" : ""}
                         {s.elevationChangeMeters}m)
                       </td>
-                      <td className="py-2.5 px-3 font-semibold">
+                      <td className="py-3 px-3 font-bold font-mono">
                         {s.avgGradientPercent > 0 ? "+" : ""}
                         {s.avgGradientPercent}%
                       </td>
-                      <td className="py-2.5 px-3">
+                      <td className="py-3 px-3">
                         <span
-                          className={`rounded-full px-2 py-0.5 text-[10px] font-semibold border ${badgeColor}`}
+                          className={`rounded-md px-2.5 py-1 text-xs font-semibold border ${badgeColor}`}
                         >
                           {label}
                         </span>
                       </td>
-                      <td className="py-2.5 px-3 text-gray-400 font-mono">
+                      <td className="py-3 px-3 text-gray-300 font-mono font-medium">
                         {s.minettiCostRatio}x
                       </td>
-                      <td className="py-2.5 px-3 font-bold text-orange-400 font-mono text-sm">
+                      <td className="py-3 px-3 font-black text-orange-400 font-mono text-sm sm:text-base">
                         {s.targetPaceFormatted} /km
                       </td>
-                      <td className="py-2.5 px-3 text-gray-300 font-mono">
+                      <td className="py-3 px-3 text-gray-200 font-mono font-medium">
                         {Math.floor(s.splitDurationSec / 60)}:
                         {(s.splitDurationSec % 60).toString().padStart(2, "0")}
                       </td>
-                      <td className="py-2.5 px-3 text-right font-bold text-white font-mono">
+                      <td className="py-3 px-3 text-right font-black text-white font-mono">
                         {s.cumulativeTimeFormatted}
                       </td>
                     </tr>

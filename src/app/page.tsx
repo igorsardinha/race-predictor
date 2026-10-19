@@ -396,7 +396,7 @@ export default function RacePredictorPage() {
               <span className="font-semibold text-white block">
                 Nenhuma conta do Strava conectada
               </span>
-              <span className="text-gray-400 text-[11px] block mt-0.5">
+              <span className="text-gray-400 text-xs block mt-0.5">
                 Conecte seu Strava oficial para baixar suas corridas das últimas 24 semanas e calibrar sua curva de fadiga individual.
               </span>
             </div>
@@ -465,11 +465,11 @@ export default function RacePredictorPage() {
 
       {/* Footer */}
       <footer className="mt-12 border-t border-gray-900 bg-gray-950 py-6 text-xs text-gray-500">
-        <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px]">
+        <div className="mx-auto max-w-7xl px-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-center sm:text-left">
           <p>
             Fundamentação Teórica: Daniels & Gilbert (1979) • Riegel (1981) • Minetti et al. (2002) • Ely et al. (2007) • ACSM (2007)
           </p>
-          <p className="text-gray-600 font-mono">
+          <p className="text-gray-500 font-mono text-xs">
             Race Predictor
           </p>
         </div>

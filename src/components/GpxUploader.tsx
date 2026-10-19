@@ -127,17 +127,17 @@ export function GpxUploader({
 
       {/* Se não enviou GPX: Seletor de Distância para o percurso plano */}
       {!isCustomGpx && (
-        <div className="mt-4 rounded-xl bg-gray-950/70 p-3 sm:p-3.5 border border-gray-800 space-y-2.5">
+        <div className="mt-4 rounded-xl bg-gray-950/70 p-3.5 sm:p-4 border border-gray-800 space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-gray-300">
+            <span className="text-xs sm:text-sm font-bold text-gray-200">
               Distância Alvo (Percurso Plano):
             </span>
-            <span className="text-xs font-mono font-bold text-orange-400">
+            <span className="text-sm font-mono font-black text-orange-400">
               {currentGpx?.totalDistanceKm || selectedFlatDistanceKm} km
             </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             {DISTANCE_PRESETS.map((p) => {
               const isSelected =
                 Math.abs(selectedFlatDistanceKm - p.km) < 0.1;
@@ -145,7 +145,7 @@ export function GpxUploader({
                 <button
                   key={p.label}
                   onClick={() => onSelectFlatDistance(p.km)}
-                  className={`rounded-lg px-2.5 sm:px-3 py-1.5 text-xs font-mono font-semibold transition ${
+                  className={`rounded-lg px-3 py-2 text-xs sm:text-sm font-mono font-bold transition ${
                     isSelected
                       ? "bg-orange-500 text-white shadow-md shadow-orange-500/20"
                       : "bg-gray-900 text-gray-300 hover:bg-gray-800 border border-gray-800"
@@ -159,7 +159,7 @@ export function GpxUploader({
             {/* Custom Distance input */}
             <form
               onSubmit={handleCustomDistanceSubmit}
-              className="flex items-center gap-1"
+              className="flex items-center gap-1.5"
             >
               <input
                 type="number"
@@ -169,11 +169,11 @@ export function GpxUploader({
                 placeholder="Outro km..."
                 value={customDistanceInput}
                 onChange={(e) => setCustomDistanceInput(e.target.value)}
-                className="w-20 sm:w-24 rounded-lg border border-gray-800 bg-gray-900 px-2 sm:px-2.5 py-1.5 text-xs text-white placeholder-gray-500 focus:border-orange-500 focus:outline-none font-mono"
+                className="w-24 rounded-lg border border-gray-800 bg-gray-900 px-3 py-2 text-xs sm:text-sm text-white placeholder-gray-500 focus:border-orange-500 focus:outline-none font-mono"
               />
               <button
                 type="submit"
-                className="rounded-lg bg-gray-800 hover:bg-gray-700 px-2.5 py-1.5 text-xs font-semibold text-white border border-gray-700 transition"
+                className="rounded-lg bg-gray-800 hover:bg-gray-700 px-3 py-2 text-xs sm:text-sm font-bold text-white border border-gray-700 transition"
               >
                 Definir
               </button>
@@ -191,7 +191,7 @@ export function GpxUploader({
         onDragLeave={() => setIsDragging(false)}
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
-        className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-3.5 sm:p-4 text-center transition ${
+        className={`mt-4 flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-4 text-center transition ${
           isDragging
             ? "border-orange-500 bg-orange-500/10"
             : isCustomGpx
@@ -217,7 +217,7 @@ export function GpxUploader({
               <CheckCircle2 className="h-5 w-5" />
             </div>
             <div className="text-left min-w-0 flex-1">
-              <span className="text-sm font-bold text-white font-mono block truncate">
+              <span className="text-sm sm:text-base font-bold text-white font-mono block truncate">
                 {currentGpx.name}
               </span>
               <p className="text-xs text-gray-400 truncate">
@@ -227,14 +227,14 @@ export function GpxUploader({
           </div>
         ) : (
           <div className="flex items-center gap-3 min-w-0">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-800 text-gray-400">
-              <Upload className="h-4 w-4" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-800 text-gray-400">
+              <Upload className="h-5 w-5" />
             </div>
             <div className="text-left min-w-0">
-              <p className="text-xs font-semibold text-white truncate">
+              <p className="text-xs sm:text-sm font-bold text-white">
                 Enviar arquivo .GPX (Opcional)
               </p>
-              <p className="text-[11px] text-gray-500 truncate">
+              <p className="text-xs text-gray-400 mt-0.5">
                 Se não enviar, cálculo assume percurso plano com clima favorável
               </p>
             </div>
@@ -243,28 +243,31 @@ export function GpxUploader({
       </div>
 
       {parseError && (
-        <div className="mt-3 rounded-lg bg-rose-500/10 border border-rose-500/30 p-2.5 text-xs text-rose-300">
+        <div className="mt-3 rounded-lg bg-rose-500/10 border border-rose-500/30 p-3 text-xs sm:text-sm text-rose-300 font-medium">
           {parseError}
         </div>
       )}
 
       {/* Course Stats KPI Grid */}
       {currentGpx && (
-        <div className="mt-4 grid grid-cols-2 gap-2 sm:gap-2.5 sm:grid-cols-4">
-          <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/60 p-2.5 sm:p-3">
-            <div className="flex items-center justify-between text-[11px] font-medium text-gray-400">
+        <div className="mt-4 grid grid-cols-2 gap-2.5 sm:gap-3 sm:grid-cols-4">
+          <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/60 p-3 flex flex-col justify-between">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-bold text-gray-300">
               <span className="truncate">Distância Total</span>
             </div>
-            <p className="mt-1 text-lg sm:text-xl font-black text-white font-mono truncate">
+            <p className="mt-1.5 text-xl sm:text-2xl font-black text-white font-mono truncate">
               {currentGpx.totalDistanceKm}{" "}
-              <span className="text-xs font-medium text-gray-400">km</span>
+              <span className="text-xs font-semibold text-gray-400">km</span>
             </p>
+            <span className="text-xs text-gray-400 font-mono mt-0.5">
+              {(currentGpx.totalDistanceMeters).toLocaleString()} m
+            </span>
           </div>
 
-          <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/60 p-2.5 sm:p-3">
-            <div className="flex items-center justify-between text-[11px] font-medium text-gray-400 gap-1">
+          <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/60 p-3 flex flex-col justify-between">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-bold text-gray-300 gap-1">
               <span className="flex items-center gap-1 truncate">
-                <TrendingUp className="h-3 w-3 text-amber-400 shrink-0" />
+                <TrendingUp className="h-3.5 w-3.5 text-amber-400 shrink-0" />
                 Ganho (D+)
               </span>
               <InfoTooltip
@@ -275,37 +278,43 @@ export function GpxUploader({
                 align="center"
               />
             </div>
-            <p className="mt-1 text-lg sm:text-xl font-black text-amber-400 font-mono truncate">
+            <p className="mt-1.5 text-xl sm:text-2xl font-black text-amber-400 font-mono truncate">
               +{currentGpx.elevationGainMeters}{" "}
-              <span className="text-xs font-medium text-gray-400">m</span>
+              <span className="text-xs font-semibold text-gray-400">m</span>
             </p>
+            <span className="text-xs text-gray-400 font-mono mt-0.5">
+              Subida acumulada
+            </span>
           </div>
 
-          <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/60 p-2.5 sm:p-3">
-            <div className="flex items-center justify-between text-[11px] font-medium text-gray-400">
+          <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/60 p-3 flex flex-col justify-between">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-bold text-gray-300">
               <span className="flex items-center gap-1 truncate">
-                <ArrowDownRight className="h-3 w-3 text-sky-400 shrink-0" />
+                <ArrowDownRight className="h-3.5 w-3.5 text-sky-400 shrink-0" />
                 Perda (D-)
               </span>
             </div>
-            <p className="mt-1 text-lg sm:text-xl font-black text-sky-400 font-mono truncate">
+            <p className="mt-1.5 text-xl sm:text-2xl font-black text-sky-400 font-mono truncate">
               -{currentGpx.elevationLossMeters}{" "}
-              <span className="text-xs font-medium text-gray-400">m</span>
+              <span className="text-xs font-semibold text-gray-400">m</span>
             </p>
+            <span className="text-xs text-gray-400 font-mono mt-0.5">
+              Descida acumulada
+            </span>
           </div>
 
-          <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/60 p-2.5 sm:p-3">
-            <div className="flex items-center justify-between text-[11px] font-medium text-gray-400">
+          <div className="min-w-0 rounded-xl border border-gray-800 bg-gray-950/60 p-3 flex flex-col justify-between">
+            <div className="flex items-center justify-between text-xs sm:text-sm font-bold text-gray-300">
               <span className="flex items-center gap-1 truncate">
-                <Compass className="h-3 w-3 text-emerald-400 shrink-0" />
+                <Compass className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                 Altitude
               </span>
             </div>
-            <p className="mt-1 text-xs sm:text-sm font-bold text-white font-mono truncate">
+            <p className="mt-1.5 text-sm sm:text-base font-black text-white font-mono truncate">
               {currentGpx.minElevationMeters}m / {currentGpx.maxElevationMeters}m
             </p>
-            <span className="text-[10px] text-gray-400 font-mono block truncate">
-              Inclinação: {currentGpx.maxGradientPercent}%
+            <span className="text-xs text-gray-400 font-mono block truncate mt-0.5">
+              Inclinação Máx: {currentGpx.maxGradientPercent}%
             </span>
           </div>
         </div>

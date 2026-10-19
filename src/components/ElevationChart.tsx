@@ -83,7 +83,7 @@ export function ElevationChart({ gpx, splits }: ElevationChartProps) {
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs text-gray-400">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-gray-400">
           <span className="flex items-center gap-1">
             <span className="h-2 w-2 rounded-full bg-emerald-400" /> Plano
           </span>
@@ -155,7 +155,7 @@ export function ElevationChart({ gpx, splits }: ElevationChartProps) {
                   x={padding.left - 8}
                   y={y + 4}
                   fill="#9ca3af"
-                  fontSize="10"
+                  fontSize="11"
                   textAnchor="end"
                 >
                   {val}m
@@ -181,7 +181,7 @@ export function ElevationChart({ gpx, splits }: ElevationChartProps) {
                   x={x}
                   y={padding.top + chartH + 18}
                   fill="#9ca3af"
-                  fontSize="10"
+                  fontSize="11"
                   textAnchor="middle"
                 >
                   {km}km
@@ -241,7 +241,7 @@ export function ElevationChart({ gpx, splits }: ElevationChartProps) {
               <span className="font-bold text-amber-400">{Math.round(activePt.ele)}m altitude</span>
             </div>
             {activeSplit && (
-              <div className="mt-1 flex items-center gap-2 text-[11px] text-gray-300">
+              <div className="mt-1 flex items-center gap-2 text-xs text-gray-300">
                 <span>
                   Inclinação:{" "}
                   <strong

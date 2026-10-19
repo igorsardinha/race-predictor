@@ -66,7 +66,7 @@ export function PaceBandCard({
           <div className="w-full max-w-md rounded-2xl border-2 border-dashed border-gray-700 bg-gray-900 p-5 print:border-solid print:border-black print:bg-white print:text-black print:shadow-none">
             {/* Header da pulseira */}
             <div className="border-b border-gray-800 pb-3 text-center print:border-gray-300">
-              <span className="text-[11px] font-black uppercase tracking-wider text-orange-400 print:text-black">
+              <span className="text-xs font-black uppercase tracking-wider text-orange-400 print:text-black">
                 TABELA DE PASSAGEM OFICIAL
               </span>
               <h4 className="text-lg font-black text-white print:text-black">
@@ -107,7 +107,7 @@ export function PaceBandCard({
             </div>
 
             {/* Rodapé da pulseira */}
-            <div className="mt-4 border-t border-gray-800 pt-2 text-center text-[10px] text-gray-400 print:border-gray-300 print:text-black">
+            <div className="mt-4 border-t border-gray-800 pt-2 text-center text-xs text-gray-400 print:border-gray-300 print:text-black">
               Hidrate-se a cada 2.5km • RacePredictor PRO
             </div>
           </div>
