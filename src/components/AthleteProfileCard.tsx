@@ -32,19 +32,16 @@ export function AthleteProfileCard({
   return (
     <div className="rounded-2xl border border-gray-800 bg-gray-900/60 p-4 sm:p-5 shadow-xl backdrop-blur-md">
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-gray-800/80 pb-4">
-        <div className="flex items-center gap-3 min-w-0 flex-1">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-gray-800/80 pb-4">
+        <div className="flex items-center gap-3 min-w-0">
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-orange-500/10 text-orange-400 border border-orange-500/20">
             <Activity className="h-5 w-5" />
           </div>
           <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-              <h2 className="text-sm font-bold text-white truncate">
+            <div className="flex items-center gap-2">
+              <h2 className="text-sm sm:text-base font-bold text-white truncate">
                 Métricas Fisiológicas
               </h2>
-              <span className="text-xs text-gray-500 font-mono shrink-0">
-                ({metrics.totalRunsAnalyzed} corridas • 24 sem)
-              </span>
               <InfoTooltip
                 title="Modelagem do Ciclo de 24 Semanas"
                 formula="VDOT = VO₂ / %VO₂max; b = ln(T₂/T₁) / ln(D₂/D₁)"
@@ -52,33 +49,33 @@ export function AthleteProfileCard({
                 bibliography="Daniels, J. & Gilbert, J. (1979); Riegel, P. S. (1981)."
               />
             </div>
-            <p className="text-xs text-gray-400 truncate">
+            <p className="text-xs text-gray-400 truncate mt-0.5">
               {athlete
-                ? `${athlete.firstname} ${athlete.lastname}`
-                : "Aguardando conexão com o Strava"}
+                ? `${athlete.firstname} ${athlete.lastname} • ${metrics.totalRunsAnalyzed} corridas (24 sem)`
+                : `Aguardando conexão • ${metrics.totalRunsAnalyzed} corridas`}
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <button
             onClick={onOpenActivities}
             disabled={metrics.totalRunsAnalyzed === 0}
-            className="flex items-center gap-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-800 px-3 py-1.5 text-xs font-medium text-gray-300 hover:text-white transition border border-gray-700/60 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 rounded-lg bg-gray-800/80 hover:bg-gray-800 px-3 py-2 sm:py-1.5 text-xs font-semibold text-gray-200 hover:text-white transition border border-gray-700/60 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            <Layers className="h-3.5 w-3.5 text-orange-400" />
-            Ver Corridas (24 Semanas)
-            <ChevronRight className="h-3.5 w-3.5 opacity-60" />
+            <Layers className="h-3.5 w-3.5 text-orange-400 shrink-0" />
+            <span>Ver Corridas (24 Semanas)</span>
+            <ChevronRight className="h-3.5 w-3.5 opacity-60 shrink-0" />
           </button>
 
           {athlete && onDisconnectStrava && (
             <button
               onClick={onDisconnectStrava}
               title="Desconectar conta do Strava (Sair)"
-              className="flex items-center gap-1 rounded-lg bg-gray-800/80 hover:bg-rose-500/10 hover:border-rose-500/40 hover:text-rose-400 px-2.5 py-1.5 text-xs text-gray-400 transition border border-gray-700/60"
+              className="flex items-center justify-center gap-1.5 rounded-lg bg-gray-800/80 hover:bg-rose-500/10 hover:border-rose-500/40 hover:text-rose-400 px-3 py-2 sm:py-1.5 text-xs font-semibold text-gray-300 transition border border-gray-700/60 shrink-0"
             >
-              <LogOut className="h-3.5 w-3.5" />
-              <span className="hidden sm:inline">Sair</span>
+              <LogOut className="h-3.5 w-3.5 text-rose-400 shrink-0" />
+              <span>Sair</span>
             </button>
           )}
         </div>

@@ -95,31 +95,31 @@ export function PredictionResult({
       <div className="mt-5 sm:mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 items-stretch">
         {/* 1. CENÁRIO OTIMISTA */}
         <div className="min-w-0 flex flex-col justify-between rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-3 sm:p-5 order-2 sm:order-1 col-span-1">
-          <div className="flex items-center justify-between gap-1">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 min-w-0">
               <Zap className="h-4 w-4 text-emerald-400 shrink-0" />
-              <span className="text-xs sm:text-xs font-bold uppercase tracking-wider text-emerald-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
                 Otimista
               </span>
-              <InfoTooltip
-                title="Intervalo Otimista (-2.5%)"
-                formula="T_opt = T_estimado × 0.975"
-                explanation="Considera eficiência máxima de corrida, temperatura favorável sem desacoplamento cardíaco acentuado e resposta neurofisiológica ideal no terço final."
-                bibliography="Galloway, J. (2002); Tucker, R. & Noakes, T. (2009). The physiological regulation of pacing strategy."
-              />
             </div>
-            <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 text-xs font-mono font-bold text-emerald-400 border border-emerald-500/20 shrink-0">
-              -2.5%
-            </span>
+            <InfoTooltip
+              title="Intervalo Otimista (-2.5%)"
+              formula="T_opt = T_estimado × 0.975"
+              explanation="Considera eficiência máxima de corrida, temperatura favorável sem desacoplamento cardíaco acentuado e resposta neurofisiológica ideal no terço final."
+              bibliography="Galloway, J. (2002); Tucker, R. & Noakes, T. (2009). The physiological regulation of pacing strategy."
+              align="right"
+            />
           </div>
 
-          <div className="my-2.5 sm:my-4 text-center">
+          <div className="my-2.5 sm:my-3 text-center">
             <div className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white font-mono">
               {prediction.confidenceRange.optimisticFormatted}
             </div>
-            <div className="mt-1 sm:mt-2 text-xs font-semibold text-emerald-300 font-mono">
-              <span className="hidden sm:inline">Ritmo: </span>
-              <strong>{prediction.confidenceRange.optimisticPaceFormatted}</strong>/km
+            <div className="mt-1.5 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-300 font-mono">
+              <span>{prediction.confidenceRange.optimisticPaceFormatted}/km</span>
+              <span className="rounded bg-emerald-500/15 px-1.5 py-0.5 text-xs font-mono font-bold text-emerald-400 border border-emerald-500/30 shrink-0">
+                -2.5%
+              </span>
             </div>
           </div>
 
@@ -168,31 +168,31 @@ export function PredictionResult({
 
         {/* 3. CENÁRIO PESSIMISTA / CONSERVADOR */}
         <div className="min-w-0 flex flex-col justify-between rounded-xl border border-rose-500/30 bg-rose-950/20 p-3 sm:p-5 order-3 sm:order-3 col-span-1">
-          <div className="flex items-center justify-between gap-1">
+          <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 min-w-0">
               <ShieldAlert className="h-4 w-4 text-rose-400 shrink-0" />
-              <span className="text-xs sm:text-xs font-bold uppercase tracking-wider text-rose-400">
+              <span className="text-xs font-bold uppercase tracking-wider text-rose-400">
                 Pessimista
               </span>
-              <InfoTooltip
-                title="Intervalo Conservador (+3.5%)"
-                formula="T_pes = T_estimado × 1.035"
-                explanation="Projeta perda de rendimento por estresse térmico prolongado, desidratação (>2% massa corporal) ou esgotamento acelerado de glicogênio nos quilômetros finais."
-                bibliography="Montain, S. J. & Coyle, E. F. (1992); Cheuvront, S. N. et al. (2010)."
-              />
             </div>
-            <span className="rounded bg-rose-500/10 px-1.5 py-0.5 text-xs font-mono font-bold text-rose-400 border border-rose-500/20 shrink-0">
-              +3.5%
-            </span>
+            <InfoTooltip
+              title="Intervalo Conservador (+3.5%)"
+              formula="T_pes = T_estimado × 1.035"
+              explanation="Projeta perda de rendimento por estresse térmico prolongado, desidratação (>2% massa corporal) ou esgotamento acelerado de glicogênio nos quilômetros finais."
+              bibliography="Montain, S. J. & Coyle, E. F. (1992); Cheuvront, S. N. et al. (2010)."
+              align="right"
+            />
           </div>
 
-          <div className="my-2.5 sm:my-4 text-center">
+          <div className="my-2.5 sm:my-3 text-center">
             <div className="text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-white font-mono">
               {prediction.confidenceRange.conservativeFormatted}
             </div>
-            <div className="mt-1 sm:mt-2 text-xs font-semibold text-rose-300 font-mono">
-              <span className="hidden sm:inline">Ritmo: </span>
-              <strong>{prediction.confidenceRange.conservativePaceFormatted}</strong>/km
+            <div className="mt-1.5 flex items-center justify-center gap-1.5 text-xs font-semibold text-rose-300 font-mono">
+              <span>{prediction.confidenceRange.conservativePaceFormatted}/km</span>
+              <span className="rounded bg-rose-500/15 px-1.5 py-0.5 text-xs font-mono font-bold text-rose-400 border border-rose-500/30 shrink-0">
+                +3.5%
+              </span>
             </div>
           </div>
 
