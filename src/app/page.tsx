@@ -48,6 +48,7 @@ export default function RacePredictorPage() {
   const [isSplitsModalOpen, setIsSplitsModalOpen] = useState(false);
   const [isPaceBandModalOpen, setIsPaceBandModalOpen] = useState(false);
   const [isStravaRoutesModalOpen, setIsStravaRoutesModalOpen] = useState(false);
+  const [isMobileTutorialOpen, setIsMobileTutorialOpen] = useState(false);
 
   // 3. Percurso State: Padrão é Percurso Plano (21.1 km) sem elevação
   const [selectedFlatDistanceKm, setSelectedFlatDistanceKm] = useState<number>(21.0975);
@@ -152,7 +153,21 @@ export default function RacePredictorPage() {
         exchangeStravaCode(code);
       }
     }
+    // Abre o tutorial no mobile sobrepondo tudo logo ao carregar a página
+    const tutorialDismissed = localStorage.getItem("racepredictor_tutorial_dismissed");
+    if (!tutorialDismissed) {
+      setIsMobileTutorialOpen(true);
+    }
   }, []);
+
+  const handleCloseTutorial = () => {
+    setIsMobileTutorialOpen(false);
+    localStorage.setItem("racepredictor_tutorial_dismissed", "true");
+  };
+
+  const handleOpenTutorial = () => {
+    setIsMobileTutorialOpen(true);
+  };
 
   // Troca o código do Strava pelo Access Token
   const exchangeStravaCode = async (code: string) => {
@@ -371,6 +386,7 @@ export default function RacePredictorPage() {
         onConnectStrava={handleConnectStrava}
         onRefreshRuns={() => fetchActivitiesFromStrava(authState.accessToken, authState.refreshToken)}
         onDisconnectStrava={handleDisconnectStrava}
+        onOpenTutorial={handleOpenTutorial}
       />
 
       {/* Alerta de erro */}
@@ -393,12 +409,9 @@ export default function RacePredictorPage() {
 
       {/* Conteúdo Principal */}
       <main className="mx-auto max-w-7xl px-3 sm:px-6 py-4 sm:py-6 flex-1 w-full space-y-4 sm:space-y-6">
-        {/* Tutorial Carrossel (Apenas no Mobile) ou Banner Desktop */}
+        {/* Banner se o Strava ainda não estiver conectado */}
         {!authState.connected && (
           <>
-            {/* Mobile: Tutorial interativo em formato de cards arrastáveis */}
-            <MobileTutorialCarousel onConnectStrava={handleConnectStrava} />
-
             {/* Desktop: Banner clássico com botão oficial do Strava */}
             <div className="hidden sm:flex rounded-xl border border-gray-800 bg-gray-900/60 p-4 items-center justify-between gap-3 text-xs text-gray-300">
               <div className="min-w-0 flex-1">
@@ -412,6 +425,26 @@ export default function RacePredictorPage() {
               <ConnectWithStravaButton
                 onClick={handleConnectStrava}
                 size="default"
+              />
+            </div>
+
+            {/* Mobile: Banner compacto com atalho para abrir o Tutorial */}
+            <div className="sm:hidden rounded-xl border border-gray-800 bg-gray-900/60 p-3.5 flex flex-col gap-2.5 text-xs text-gray-300">
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-white">
+                  Conecte seu Strava Oficial
+                </span>
+                <button
+                  onClick={handleOpenTutorial}
+                  className="text-[11px] font-bold text-orange-400 hover:text-orange-300"
+                >
+                  Ver Tutorial →
+                </button>
+              </div>
+              <ConnectWithStravaButton
+                onClick={handleConnectStrava}
+                size="default"
+                className="w-full"
               />
             </div>
           </>
@@ -512,6 +545,13 @@ export default function RacePredictorPage() {
         accessToken={authState.accessToken}
         athleteId={authState.athlete?.id}
         onSelectRoute={handleGpxParsed}
+      />
+
+      {/* Tutorial Mobile em Formato Modal Overlay Sobrepondo Tudo */}
+      <MobileTutorialCarousel
+        isOpen={isMobileTutorialOpen}
+        onClose={handleCloseTutorial}
+        onConnectStrava={handleConnectStrava}
       />
 
       {/* PWA Banner Prompt de Instalação */}

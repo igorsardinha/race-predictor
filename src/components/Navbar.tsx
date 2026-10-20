@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Activity, RefreshCw, CheckCircle2, LogOut } from "lucide-react";
+import { Activity, RefreshCw, CheckCircle2, LogOut, HelpCircle } from "lucide-react";
 import { StravaAthlete } from "@/lib/types";
 import { ConnectWithStravaButton } from "./ConnectWithStravaButton";
 
@@ -13,6 +13,7 @@ interface NavbarProps {
   onConnectStrava: () => void;
   onRefreshRuns: () => void;
   onDisconnectStrava: () => void;
+  onOpenTutorial?: () => void;
 }
 
 export function Navbar({
@@ -23,6 +24,7 @@ export function Navbar({
   onConnectStrava,
   onRefreshRuns,
   onDisconnectStrava,
+  onOpenTutorial,
 }: NavbarProps) {
   return (
     <header className="sticky top-0 z-40 w-full border-b border-gray-800 bg-gray-950/90 backdrop-blur-md">
@@ -32,11 +34,21 @@ export function Navbar({
           <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-orange-600 text-white font-black text-xs sm:text-sm">
             RP
           </div>
-          <div className="min-w-0 flex items-center">
+          <div className="min-w-0 flex items-center gap-2">
             <span className="text-sm sm:text-base font-black tracking-tight text-white truncate">
               Race Predictor
             </span>
-            <span className="ml-1.5 text-xs text-gray-500 font-mono hidden sm:inline">v1.2</span>
+            <span className="text-xs text-gray-500 font-mono hidden sm:inline">v1.2</span>
+            {onOpenTutorial && (
+              <button
+                onClick={onOpenTutorial}
+                title="Como usar o app (Tutorial)"
+                className="flex items-center gap-1 rounded-full border border-orange-500/30 bg-orange-500/10 hover:bg-orange-500/20 px-2 py-0.5 text-[11px] font-bold text-orange-400 sm:hidden transition"
+              >
+                <HelpCircle className="h-3 w-3" />
+                <span>Tutorial</span>
+              </button>
+            )}
           </div>
         </div>
 
