@@ -13,6 +13,7 @@ import { PaceStrategyTable } from "@/components/PaceStrategyTable";
 import { PaceBandCard } from "@/components/PaceBandCard";
 import { StravaRoutesModal } from "@/components/StravaRoutesModal";
 import { ConnectWithStravaButton } from "@/components/ConnectWithStravaButton";
+import { MobileTutorialCarousel } from "@/components/MobileTutorialCarousel";
 import { PwaInstallPrompt } from "@/components/PwaInstallPrompt";
 
 import {
@@ -392,23 +393,28 @@ export default function RacePredictorPage() {
 
       {/* Conteúdo Principal */}
       <main className="mx-auto max-w-7xl px-3 sm:px-6 py-4 sm:py-6 flex-1 w-full space-y-4 sm:space-y-6">
-        {/* Banner se o Strava ainda não estiver conectado */}
+        {/* Tutorial Carrossel (Apenas no Mobile) ou Banner Desktop */}
         {!authState.connected && (
-          <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-gray-300">
-            <div className="min-w-0 flex-1">
-              <span className="font-semibold text-white block">
-                Nenhuma conta do Strava conectada
-              </span>
-              <span className="text-gray-400 text-xs block mt-0.5">
-                Conecte seu Strava oficial para baixar suas corridas das últimas 24 semanas e calibrar sua curva de fadiga individual.
-              </span>
+          <>
+            {/* Mobile: Tutorial interativo em formato de cards arrastáveis */}
+            <MobileTutorialCarousel onConnectStrava={handleConnectStrava} />
+
+            {/* Desktop: Banner clássico com botão oficial do Strava */}
+            <div className="hidden sm:flex rounded-xl border border-gray-800 bg-gray-900/60 p-4 items-center justify-between gap-3 text-xs text-gray-300">
+              <div className="min-w-0 flex-1">
+                <span className="font-semibold text-white block">
+                  Nenhuma conta do Strava conectada
+                </span>
+                <span className="text-gray-400 text-xs block mt-0.5">
+                  Conecte seu Strava oficial para baixar suas corridas das últimas 24 semanas e calibrar sua curva de fadiga individual.
+                </span>
+              </div>
+              <ConnectWithStravaButton
+                onClick={handleConnectStrava}
+                size="default"
+              />
             </div>
-            <ConnectWithStravaButton
-              onClick={handleConnectStrava}
-              size="default"
-              className="w-full sm:w-auto"
-            />
-          </div>
+          </>
         )}
 
         {/* 1. HERO PREDICTION CARD */}
