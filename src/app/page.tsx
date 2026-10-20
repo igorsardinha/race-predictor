@@ -153,9 +153,10 @@ export default function RacePredictorPage() {
         exchangeStravaCode(code);
       }
     }
-    // Abre o tutorial no mobile sobrepondo tudo logo ao carregar a página
+    // Abre o tutorial no mobile sobrepondo tudo logo ao carregar a página APENAS se ainda não estiver conectado
+    const hasActiveAuth = Boolean(savedAuth);
     const tutorialDismissed = localStorage.getItem("racepredictor_tutorial_dismissed");
-    if (!tutorialDismissed) {
+    if (!hasActiveAuth && !tutorialDismissed) {
       setIsMobileTutorialOpen(true);
     }
   }, []);
@@ -163,10 +164,6 @@ export default function RacePredictorPage() {
   const handleCloseTutorial = () => {
     setIsMobileTutorialOpen(false);
     localStorage.setItem("racepredictor_tutorial_dismissed", "true");
-  };
-
-  const handleOpenTutorial = () => {
-    setIsMobileTutorialOpen(true);
   };
 
   // Troca o código do Strava pelo Access Token
@@ -190,6 +187,8 @@ export default function RacePredictorPage() {
           athlete: data.athlete,
         };
         setAuthState(auth);
+        setIsMobileTutorialOpen(false);
+        localStorage.setItem("racepredictor_tutorial_dismissed", "true");
         localStorage.setItem("racepredictor_strava_auth", JSON.stringify(auth));
         await fetchActivitiesFromStrava(data.accessToken, data.refreshToken);
       } else {
@@ -386,7 +385,6 @@ export default function RacePredictorPage() {
         onConnectStrava={handleConnectStrava}
         onRefreshRuns={() => fetchActivitiesFromStrava(authState.accessToken, authState.refreshToken)}
         onDisconnectStrava={handleDisconnectStrava}
-        onOpenTutorial={handleOpenTutorial}
       />
 
       {/* Alerta de erro */}
@@ -411,43 +409,21 @@ export default function RacePredictorPage() {
       <main className="mx-auto max-w-7xl px-3 sm:px-6 py-4 sm:py-6 flex-1 w-full space-y-4 sm:space-y-6">
         {/* Banner se o Strava ainda não estiver conectado */}
         {!authState.connected && (
-          <>
-            {/* Desktop: Banner clássico com botão oficial do Strava */}
-            <div className="hidden sm:flex rounded-xl border border-gray-800 bg-gray-900/60 p-4 items-center justify-between gap-3 text-xs text-gray-300">
-              <div className="min-w-0 flex-1">
-                <span className="font-semibold text-white block">
-                  Nenhuma conta do Strava conectada
-                </span>
-                <span className="text-gray-400 text-xs block mt-0.5">
-                  Conecte seu Strava oficial para baixar suas corridas das últimas 24 semanas e calibrar sua curva de fadiga individual.
-                </span>
-              </div>
-              <ConnectWithStravaButton
-                onClick={handleConnectStrava}
-                size="default"
-              />
+          <div className="rounded-xl border border-gray-800 bg-gray-900/60 p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-gray-300">
+            <div className="min-w-0 flex-1">
+              <span className="font-semibold text-white block">
+                Nenhuma conta do Strava conectada
+              </span>
+              <span className="text-gray-400 text-xs block mt-0.5">
+                Conecte seu Strava oficial para baixar suas corridas das últimas 24 semanas e calibrar sua curva de fadiga individual.
+              </span>
             </div>
-
-            {/* Mobile: Banner compacto com atalho para abrir o Tutorial */}
-            <div className="sm:hidden rounded-xl border border-gray-800 bg-gray-900/60 p-3.5 flex flex-col gap-2.5 text-xs text-gray-300">
-              <div className="flex items-center justify-between">
-                <span className="font-semibold text-white">
-                  Conecte seu Strava Oficial
-                </span>
-                <button
-                  onClick={handleOpenTutorial}
-                  className="text-[11px] font-bold text-orange-400 hover:text-orange-300"
-                >
-                  Ver Tutorial →
-                </button>
-              </div>
-              <ConnectWithStravaButton
-                onClick={handleConnectStrava}
-                size="default"
-                className="w-full"
-              />
-            </div>
-          </>
+            <ConnectWithStravaButton
+              onClick={handleConnectStrava}
+              size="default"
+              className="w-full sm:w-auto"
+            />
+          </div>
         )}
 
         {/* 1. HERO PREDICTION CARD */}
@@ -547,12 +523,15 @@ export default function RacePredictorPage() {
         onSelectRoute={handleGpxParsed}
       />
 
-      {/* Tutorial Mobile em Formato Modal Overlay Sobrepondo Tudo */}
-      <MobileTutorialCarousel
-        isOpen={isMobileTutorialOpen}
-        onClose={handleCloseTutorial}
-        onConnectStrava={handleConnectStrava}
-      />
+      {/* Tutorial Mobile em Formato Modal Overlay (apenas se NÃO estiver conectado ao Strava) */}
+      {!authState.connected && (
+        <MobileTutorialCarousel
+          isOpen={isMobileTutorialOpen}
+          onClose={handleCloseTutorial}
+          onConnectStrava={handleConnectStrava}
+          isConnected={authState.connected}
+        />
+      )}
 
       {/* PWA Banner Prompt de Instalação */}
       <PwaInstallPrompt />

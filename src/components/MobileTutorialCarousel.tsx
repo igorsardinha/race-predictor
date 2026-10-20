@@ -20,19 +20,22 @@ interface MobileTutorialCarouselProps {
   isOpen: boolean;
   onClose: () => void;
   onConnectStrava: () => void;
+  isConnected?: boolean;
 }
 
 export function MobileTutorialCarousel({
   isOpen,
   onClose,
   onConnectStrava,
+  isConnected,
 }: MobileTutorialCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
 
   const totalCards = 4;
 
-  if (!isOpen) return null;
+  // Se não estiver aberto ou se o atleta já estiver conectado, não renderiza
+  if (!isOpen || isConnected) return null;
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
     const scrollLeft = e.currentTarget.scrollLeft;
